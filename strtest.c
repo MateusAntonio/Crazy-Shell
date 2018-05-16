@@ -2,20 +2,16 @@
 #include <string.h>
 
 int main(int argc, char* argv[]){
+    int quantidadePalavrasRecebidas = 0;
     char instrucao[100];
-    int j = 0;
-    int i = 0;
-    int k = 0;
-    char* argumentos[6];
-    char* token;
-    printf("CrazyShell@user:~>");
-    for(i = 0; i < 6; i++){
-        scanf("%s", argumentos[i]);    
-    }
+    char* argumentos[5];
 
 
-if(strcmp(argumentos[i], "\0")){
-    n++;
+    quantidadePalavrasRecebidas = scanf("%[^\n]s", instrucao);
+    printf("%d", quantidadePalavrasRecebidas);
+
+
+    return 0;
 }
 
 
