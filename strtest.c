@@ -2,49 +2,22 @@
 #include <string.h>
 
 int main(int argc, char* argv[]){
-    int quantidadePalavrasRecebidas = 0;
     char instrucao[100];
-    char* argumentos[5];
-
-
-    quantidadePalavrasRecebidas = scanf("%[^\n]s", instrucao);
-    printf("%d", quantidadePalavrasRecebidas);
-
-
-    return 0;
-}
-
-
-
-    // setbuf(stdin, NULL);
-    // fgets(instrucao, 100, stdin);
-    // // getchar();
-    // for
-    // scanf("%[^\n]s", instrucao);
-    // argumentos[j++] = token = strtok(instrucao, " ");
-    
-
-    // while(token != NULL){
-    //     // printf("%s\n", token);
-    //     token = strtok(NULL, " ");
-    //     argumentos[j++] = token;
-    // }
-    // for (i=0; i < strlen(argumentos); i++)
-    //     printf("%s ", argumentos[i]);
-    // // printf("%d\n", i);
-    // // printf("\n\n\n\n%d\n\n\n\n\n", argumentos[i]);
-    
-    return 0;
-
-
-    // char vet[];
-    // printf("CrazyShell@user:~>");
-    // scanf("%s", vet);
-    // token = strtok(vet, " ");
-    // while(token != NULL){
-    //     printf("%s ", token);
-    //     token = strtok(vet, " ");
-    // }
-    // // scanf("%s", vet);
-    // return 0;
+    char argumentos[5][30];
+    int i = 0;
+    char* token;
+    printf("CrazyShell@user:~>");
+    printf("chegou aqui 0");
+    while(scanf("%s", instrucao));
+    printf("chegou aqui 00");
+    strcpy(argumentos[i++],token = strtok(instrucao, " "));
+    printf("chegou aqui 1");
+    while(token != NULL){
+        strcpy(argumentos[i++],token = strtok(NULL, " "));
+    }
+    printf("chegou aqui 2");
+    for(int j = 0; j < 5; j++){
+        printf("%s\n", argumentos[j]);
+    }
+return 0;
 }
