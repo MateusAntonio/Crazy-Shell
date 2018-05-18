@@ -13,13 +13,12 @@
 
 int main(int argc, char* argv[]){
 
+    while(1) { // loop infinito
+
     char instrucao[100];
     char argumentos[5][30];
     int i = 0;
     char* token;
-    int ws;
-
-    for(;;) { // loop infinito
 
         printf("CrazyShell@user:~>");
 
@@ -27,41 +26,35 @@ int main(int argc, char* argv[]){
         getchar(); // para pegar o enter
 
         if(instrucao[0] == '.' && instrucao[1] == '/') { // em caso de digitar comando , ex : ./telegram
-        	ws = 0;
+        	int ws = 0;
                 for (i=0; i<strlen(instrucao); i++) { // conta espacos
                     if(instrucao[i] == ' ')
                         ws++;
                 }
-               // printf("%d\n", ws);
-                i = 0;
-                strcpy(argumentos[i++],token = strtok(instrucao, " "));
-                int j=0;
+            i = 0;
+            strcpy(argumentos[i++],token = strtok(instrucao, " "));
+            int j=0;
 
-                while(j < ws){ // ao final, j sera o n de argumentos + comando
-                    strcpy(argumentos[i++],token = strtok(NULL, " "));
-                    j++;
-                }
+            while(j < ws){ // ao final, j sera o n de argumentos + comando
+                strcpy(argumentos[i++],token = strtok(NULL, " "));
+                j++;
+            }
 
-                if(j < 6) {
-                    for(int x = 0; x <= j; x++){
-                        printf("%s\n", argumentos[x]);
-                    }
+            if(j < 6) { // entrada correta
+                for(int x = 0; x <= j; x++){
+                    printf("%s\n", argumentos[x]);
                 }
-                else {
-                    printf("Apenas sao permitidos ate 5 argumentos!\n");
-                }
-        }
-        else if(strcmp(instrucao, "wait") == 0) {
-
+            }
+            else { // mais parâmetros do que o permitido
+                printf("Apenas sao permitidos ate 5 argumentos!\n");
+            }
+        } else if(strcmp(instrucao, "wait") == 0) { // wait
             printf("comando wait detectado\n");
-        }
-        else if(strcmp(instrucao, "exit") == 0) {
-
+        } else if(strcmp(instrucao, "exit") == 0) { //exit
             printf("adeus\n");
             exit(0);
-
         }
-        else
+        else // comando incorreto
             printf("csh: Comando \"%s\" nao encontrado\n", instrucao);
     }
         return 0;
