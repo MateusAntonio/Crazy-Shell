@@ -7,7 +7,8 @@
 void crazy_exit();
 void prompt();
 void ctrl_c(int signo);
-void exec();
+void exec(char* program, char** argumentos);
+void limpaNomePrograma(char* nomeComPontoBarra, char* nomeSemPontoBarra);
 
 pid_t pidfilho; // global pq é necessária no handler ctrl_c
 
@@ -17,6 +18,8 @@ int main(int argc, const char* argv[]){
 
     char instrucao[100];
     char argumentos[5][30];
+    char program[30];
+    char auxiliarProgram[30];
     int i = 0;
     char* token;
 
@@ -31,8 +34,9 @@ int main(int argc, const char* argv[]){
                     if(instrucao[i] == ' ')
                         ws++;
                 }
+            strcpy(auxiliarProgram,token = strtok(instrucao, " "));
+            limpaNomePrograma(auxiliarProgram, program);
             i = 0;
-            strcpy(argumentos[i++],token = strtok(instrucao, " "));
             int j=0;
 
             while(j < ws){ // ao final, j sera o n de argumentos + comando
@@ -41,11 +45,12 @@ int main(int argc, const char* argv[]){
             }
 
             if(j < 6) { // exec
-                exec();
-                //     printf("exec identificado");
-                // for(int x = 0; x <= j; x++){
-                //     printf("%s\n", argumentos[x]);
-                // }
+                // exec(program, argumentos);
+                    printf("exec identificado\n");
+                    printf("Nome do programa: %s\n", program);
+                for(int x = 0; x < j; x++){
+                    printf("%s\n", argumentos[x]);
+                }
             }
             else { // mais parâmetros do que o permitido
                 printf("Apenas sao permitidos ate 5 argumentos!\n");
@@ -66,8 +71,7 @@ void prompt(){
     printf("CrazyShell@user:~>");
 }
 
-void exec(){
-    char *const ArgumentV[] = {"2015100338", "162534"}; // ver como isso funciona
+void exec(char* program, char** argumentos){
     pid_t pid = fork(); //fork a child
 
     if(pid < 0){ //error forking 
@@ -81,14 +85,14 @@ void exec(){
             return ;
         } else if(pid2 == 0){ // grandson process
             printf("print do neto\n");
-            execv("pppoedi-cli", ArgumentV);
-            printf("Executou neto");
+            execv(program, argumentos);
+            printf("Executou neto\n");
         } else {
             pidfilho = pid;
             sleep(2);
             printf("print do filho/pai do neto\n");
-            execv("pppoedi-cli", ArgumentV);
-            printf("Executou filho/pai");
+            execv(program, argumentos);
+            printf("Executou filho/pai\n");
         }
     
     } else { //parent process
@@ -125,5 +129,12 @@ void crazy_exit() {
             printf("Esperanado filho liberar");
         else
             break;
+    }
+}
+
+void limpaNomePrograma(char* nomeComPontoBarra, char* nomeSemPontoBarra){
+    int n = strlen(nomeComPontoBarra);
+    for(int i = 0; i < n; i++){
+        nomeSemPontoBarra[i] = nomeComPontoBarra[i+2];
     }
 }
