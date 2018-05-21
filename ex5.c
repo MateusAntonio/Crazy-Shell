@@ -61,7 +61,7 @@ int main(int argc, const char* argv[]){
             crazy_wait();
         } else if(strcmp(instrucao, "exit") == 0) { //exit
             // liberar memoria
-            for (int x=0; x<5; x++) {
+            for (int x=0; x<j; x++) {
                 free(argumentos[x]);
             }
             crazy_exit();
@@ -96,26 +96,26 @@ void exec(char* exe, char* argv[]){
             return ;
         } else if(pid2 == 0){ // grandson process
             //printf("print do neto\n");
-           // daemon(0, 0);
-           // erro = execv(exe, argv);
-            //if(erro == (-1))
-                //printf("deu erro krlh");
-            //printf("Executou neto");
+        //    daemon(0, 0);
+           erro = execv(exe, argv);
+            if(erro == (-1))
+                printf("deu erro krlh");
+            printf("Executou neto");
             
         } else {
             pidfilho = pid;
-            //sleep(2);
+            sleep(2);
             //printf("print do filho\n");
-            //erro = execv(exe, argv);
-            //if(erro == (-1))
-              //  printf("deu erro krlh");
-            //printf("Executou filho/pai");
-            //sleep(2);
+            erro = execv(exe, argv);
+            if(erro == (-1))
+               printf("deu erro krlh");
+            printf("Executou filho/pai");
+            sleep(2);
             
         }
-        erro = execv(exe, argv);
-        if(erro == (-1))
-            printf("deu erro ai");
+        // erro = execv(exe, argv);
+        // if(erro == (-1))
+        //     printf("deu erro ai\n");
         
         
     } else { //parent process
@@ -137,7 +137,7 @@ void ctrl_c(int signo) {
     signal(signo, SIG_IGN); // ignora um possivel control c novo
     prompt();
     printf("Não adianta me enviar um sinal fpor Ctrl-c, não vou morrer! Você quer"
-           "suspender meu filho que está rodando em foreground? S/n:");
+           "suspender meu filho que está rodando em foreground? S/n:\n");
     c = getchar();
     if (c == 'S' || c == 's')
         kill(pidfilho, 20);
@@ -161,7 +161,7 @@ void crazy_wait() {
     
     pid_t pid;
     int status;
-    while((pid == waitpid(pid, &status, WNOHANG)) > 0) {
+    while((pid = waitpid(-1, &status, WNOHANG)) > 0) {
         
         if(WIFSIGNALED(status))
            printf("[INFO] O processo %d foi recebeu o sinal %d e foi finalizado", pid, WTERMSIG(status));

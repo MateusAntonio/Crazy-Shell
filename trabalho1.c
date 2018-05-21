@@ -45,12 +45,12 @@ int main(int argc, const char* argv[]){
             }
 
             if(j < 6) { // exec
-                // exec(program, argumentos);
-                    printf("exec identificado\n");
-                    printf("Nome do programa: %s\n", program);
-                for(int x = 0; x < j; x++){
-                    printf("%s\n", argumentos[x]);
-                }
+                exec(program, argumentos);
+                //     printf("exec identificado\n");
+                //     printf("Nome do programa: %s\n", program);
+                // for(int x = 0; x < j; x++){
+                //     printf("%s\n", argumentos[x]);
+                // }
             }
             else { // mais parâmetros do que o permitido
                 printf("Apenas sao permitidos ate 5 argumentos!\n");
