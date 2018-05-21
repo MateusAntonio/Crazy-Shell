@@ -20,14 +20,16 @@ int main(int argc, const char* argv[]){
     pid_t son;
     pid_t pai = getpid();
     pid_t neto;
-    int aux;
+    int status;
+    char executavel[30]; // conterah apenas o nome do executavel
+    char* argumentos[5];  // conterah apenas os argumentos
+    int i = 0;
     
     while(1) {
         
+        if(getpid() == pai) {
         char instrucao[100];  // linha toda que sera lida
-        char executavel[30]; // conterah apenas o nome do executavel
-        char* argumentos[5];  // conterah apenas os argumentos
-        int i = 0;
+        
         int j = 0;
         char* token;
         
@@ -57,29 +59,6 @@ int main(int argc, const char* argv[]){
             
             //argumentos[i] = NULL;
             
-            if(j < 6) { // exec
-                
-                son = fork();
-                
-                if(getpid() == pai) {
-                    aux = waitpid(son, &aux, WUNTRACED);
-                }
-                
-                if(son == 0) {
-                    neto = fork();
-                    
-                    if (neto == 0) {
-                        daemon(0, 0);
-                    }
-                    
-                    execv(executavel, argumentos);
-                    
-                }
-                
-            }
-            else { // mais parâmetros do que o permitido
-                printf("Apenas sao permitidos ate 5 argumentos!\n");
-            }
         } else if(strcmp(instrucao, "wait") == 0) { // wait
             crazy_wait();
         } else if(strcmp(instrucao, "exit") == 0) { //exit
@@ -89,9 +68,27 @@ int main(int argc, const char* argv[]){
             }
             crazy_exit();
         }
-        else // comando incorreto
-            printf("csh: Comando \"%s\" nao encontrado\n", instrucao);
+        else {
+            son = fork();
+            if(son < 0)
+                printf("error forking");
     }
+    }
+        
+        if(getpid() == pai) {
+            status = waitpid(son, &status, WUNTRACED);
+        }
+        
+        if(son == 0) {
+            
+            neto = fork();
+            if(neto == 0)
+                //daemon(0,0);
+            
+        execv(executavel, argumentos);
+            
+        }
+  }
     return 0;
 }
 
