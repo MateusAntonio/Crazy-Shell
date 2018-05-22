@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <sys/wait.h>
 #include "auxiliar.h"
 
 void prompt(){
@@ -36,7 +42,7 @@ void exec(char* exe, char* argv[]){
     } else { //parent process
         int status;
         waitpid(pidfilho, &status, WUNTRACED);
-        key=0;
+        //key=0;
     }
     //return
 }
@@ -56,7 +62,7 @@ void ctrl_c(int signo) {
         kill(pidfilho, 20);
     getchar(); // ignora o enter
     sigprocmask(SIG_SETMASK, &oldset, NULL);//reseta a mascara do sistema para a mascara guardada em oldset
-    main();
+    //main();
 }
 
 void crazy_exit() {

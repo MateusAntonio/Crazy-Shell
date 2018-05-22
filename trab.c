@@ -4,18 +4,18 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <sys/wait.h>
-#include "auxiliar.c"
+#include "auxiliar.h"
 
-
+//key=0;
 
 int main() {
-    pid_t pai = getpid();
+    pid_t pid = getpid();
     
     signal(SIGINT, ctrl_c);
     
     while(1) {
         
-        if(pai == getpid()){
+        if(pid == getpid()) { // evitar acessos de outros processos
             
             char instrucao[100] = {'\0'};  // linha toda que sera lida
             char executavel[30] = {'\0'}; // conterah apenas o nome do executavel
@@ -77,7 +77,3 @@ int main() {
     }
     return 0;
 }
-
-
-
-
