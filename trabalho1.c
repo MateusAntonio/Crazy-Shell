@@ -28,7 +28,7 @@ int main(int argc, const char* argv[]){
         scanf("%[^\n]", instrucao);
         getchar(); // para pegar o enter
 
-        if(instrucao[0] == '.' && instrucao[1] == '/') { // em caso de digitar comando , ex : ./telegram
+        if(instrucao[0] != ' ' && instrucao[0] != '\n') { // em caso de digitar comando , ex : ./telegram
         	int ws = 0;
                 for (i=0; i<strlen(instrucao); i++) { // conta espacos
                     if(instrucao[i] == ' ')
@@ -73,7 +73,7 @@ void prompt(){
 
 void exec(char* program, char** argumentos){
     pid_t pid = fork(); //fork a child
-
+    printf("iosabn");
     if(pid < 0){ //error forking 
         fprintf(stderr, "Fork failed! \n");
         return ;

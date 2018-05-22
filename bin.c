@@ -9,9 +9,10 @@
 #include <stdio.h>
 
 int main(int argc, char* argv[]) {
-    
-    printf("Executando!! com os seguintes argumentos\n");
-    for (int i=0; i<argc; i++) {
-        printf("%s", argv[i]);
-    }
+    // printf("Executando!! com os seguintes argumentos:\n");
+    // for (int i=0; i<argc; i++) {
+    //     printf("%s ", argv[i]);
+    // }
+    // printf("\n");
+    sleep(10);
 }
